@@ -1,0 +1,15 @@
+.main{
+    text-align: center;
+}
+button{
+    background-color: blue;
+    width: 150px;
+    height: 100px;
+    color: wheat;
+    padding: 10px;
+    margin: 10px;
+
+}
+#Num{
+    font-size: 100px;
+}

@@ -1,26 +1,15 @@
 import React, {Component} from 'react';
 import './App.css';
-import FirstComponent, {SecondComponent} from './Components/examples/FirstComponent';
+import Counter from './Counter/counter';
 
 class App extends Component{
     render(){
         return (
             <div className="App">
-              Hello world
-              <FirstComponent/>
-              <SecondComponent/>
-              <ThirdComponent/>
+              <Counter/>
             </div>
           );
     }
-}
-
-function ThirdComponent(){
-    return(
-        <div>
-            ThirdComponent
-        </div>
-    );
 }
 
 export default App;
