@@ -1,6 +1,6 @@
 # This repository contains basic React apps
 ## APP 1: Counter
-### This app contains three butttons to  increment, decrement and reset a counter(available as text)
+### This app contains butttons to  increment, decrement and reset a counter(available as text)
 <img src="https://user-images.githubusercontent.com/20191885/137616483-950eea18-fc6e-49ca-9b4e-df40f848ee42.png" width=250 height=250/>
 
 
