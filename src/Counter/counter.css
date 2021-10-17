@@ -13,3 +13,12 @@ button{
 #Num{
     font-size: 100px;
 }
+
+.reset{
+    background-color: red;
+    width: 300px;
+    height: 100px;
+    color: wheat;
+    padding: 10px;
+    margin: 10px;
+}
