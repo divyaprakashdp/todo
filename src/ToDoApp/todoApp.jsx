@@ -18,13 +18,24 @@ export default class ToDoApp extends Component {
                     <Routes>
                    
 
-                        <Route path="/login" element={<LoginComponentWithNavigation />} />
+                        <Route path="/" element={<LoginComponentWithNavigation />} />
                         <Route path="/login" element={<LoginComponentWithNavigation />} />
                         <Route path="/welcome" element={<WelcomeComponent />} />
+                        <Route path="*" element={<ErrorComponent/>}/>
                     </Routes>
                 </Router>
                 {/* <LoginComponent/> */}
                 {/* <WelcomeComponent/> */}
+            </div>
+        )
+    }
+}
+
+class ErrorComponent extends Component{
+    render(){
+        return(
+            <div>
+                Oops! An error occured.
             </div>
         )
     }
