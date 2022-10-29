@@ -5,7 +5,6 @@ import withNavigation from './withNavigation.jsx';
 import withParams from './withParams.jsx';
 
 
-
 export default class ToDoApp extends Component {
 
 
@@ -16,18 +15,56 @@ export default class ToDoApp extends Component {
             <div>
 
                 <Router>
+                <HeaderComponent/>
                     <Routes>
-
-
+                        
                         <Route path="/" element={<LoginComponentWithNavigation />} />
                         <Route path="/login" element={<LoginComponentWithNavigation />} />
                         <Route path="/welcome/:name" element={<WelcomeComponentWithParams />} />
                         <Route path="/todos" element={<ListTodosComponent />} />
                         <Route path="*" element={<ErrorComponent />} />
+                        
                     </Routes>
+                    <FooterComponent/>
                 </Router>
                 {/* <LoginComponent/> */}
                 {/* <WelcomeComponent/> */}
+            </div>
+        )
+    }
+}
+
+class HeaderComponent extends Component{
+    render(){
+        return(
+            <header>
+                <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
+                    <div><a className='navbar-brand' href="https://www.linkedin.com/in/divyaprakashdp/" target="_blank">dp</a></div>
+                    <ul className='navbar-nav'>
+                        <li className='nav-link'>
+                            <Link to="/welcome/dp"> Home</Link>
+                        </li>
+                        <li className='nav-link'>
+                            <Link to="/todos">Todos</Link>
+                        </li>
+                    </ul>
+
+                    <ul className='navbar-nav navbar-collapse justify-content-end'>
+                        <li className='nav-link'>
+                            <Link to="/login">Login</Link></li>
+                        <li className='nav-link'>Logout</li>
+                    </ul>
+                </nav>
+            </header>
+        )
+    }
+}
+
+class FooterComponent extends Component{
+    render(){
+        return(
+            <div>
+                <hr/>Footer
             </div>
         )
     }
@@ -49,7 +86,8 @@ class ListTodosComponent extends Component {
         return (
             <div>
                 <h1>Todo List</h1>
-                <table>
+                
+                <table className="table table-bordered">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -58,8 +96,7 @@ class ListTodosComponent extends Component {
                             <th>ETA</th>
                         </tr>
                     </thead>
-
-                    <body>
+                    <tbody>
                         {
                             this.state.todos.map(
                                 todo =>
@@ -72,7 +109,7 @@ class ListTodosComponent extends Component {
                             )
                         }
 
-                    </body>
+                    </tbody>
                 </table>
             </div>
         )
