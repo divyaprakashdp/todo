@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HelloWorldService from '../api/todo/HelloWorldService.js'
 import withNavigation from './withNavigation.jsx';
+import withParams from './withParams.jsx';
 
 
 
@@ -10,7 +11,7 @@ export default class ToDoApp extends Component {
 
     render() {
         const LoginComponentWithNavigation = withNavigation(LoginComponent);
-
+        const WelcomeComponentWithParams = withParams(WelcomeComponent);
         return (
             <div>
 
@@ -20,7 +21,7 @@ export default class ToDoApp extends Component {
 
                         <Route path="/" element={<LoginComponentWithNavigation />} />
                         <Route path="/login" element={<LoginComponentWithNavigation />} />
-                        <Route path="/welcome" element={<WelcomeComponent />} />
+                        <Route path="/welcome/:name" element={<WelcomeComponentWithParams />} />
                         <Route path="*" element={<ErrorComponent/>}/>
                     </Routes>
                 </Router>
@@ -45,7 +46,7 @@ class WelcomeComponent extends Component {
     render() {
         return (
             <div>
-                Welcome to home page!
+                Welcome to home page Mr. {this.props.params.name}!
             </div>
         )
     }
@@ -94,8 +95,8 @@ class LoginComponent extends Component {
     // }
 
     logInClicked(event) {
-        if (this.state.username === "dp1506" && this.state.password === "Pass1") {
-            this.props.navigate(`/welcome`)
+        if (this.state.username === "dp" && this.state.password === "1234") {
+            this.props.navigate(`/welcome/${this.state.username}`)
             // this.setState({
             //     showSuccessMsg: true
             // })
