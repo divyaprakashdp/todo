@@ -1,18 +1,25 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HelloWorldService from '../api/todo/HelloWorldService.js'
+import withNavigation from './withNavigation.jsx';
+
+
 
 export default class ToDoApp extends Component {
 
 
     render() {
+        const LoginComponentWithNavigation = withNavigation(LoginComponent);
+
         return (
             <div>
 
                 <Router>
                     <Routes>
-                        <Route path="/" exact element={<LoginComponent />} />
-                        <Route path="/login" element={<LoginComponent />} />
+                   
+
+                        <Route path="/login" element={<LoginComponentWithNavigation />} />
+                        <Route path="/login" element={<LoginComponentWithNavigation />} />
                         <Route path="/welcome" element={<WelcomeComponent />} />
                     </Routes>
                 </Router>
@@ -38,7 +45,7 @@ class LoginComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: "username",
+            username: "",
             password: "",
             hasLoginFailed: false,
             showSuccessMsg: false,
@@ -77,12 +84,13 @@ class LoginComponent extends Component {
 
     logInClicked(event) {
         if (this.state.username === "dp1506" && this.state.password === "Pass1") {
-            this.setState({
-                showSuccessMsg: true
-            })
-            this.setState({
-                hasLoginFailed: false
-            })
+            this.props.navigate(`/welcome`)
+            // this.setState({
+            //     showSuccessMsg: true
+            // })
+            // this.setState({
+            //     hasLoginFailed: false
+            // })
         } else {
             this.setState({
                 showSuccessMsg: false
@@ -112,7 +120,7 @@ class LoginComponent extends Component {
     render() {
         return (
             <div>
-                <>
+                
                     {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
                     {this.state.showSuccessMsg && <div>Login Successful</div>}
                     {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>
@@ -120,7 +128,7 @@ class LoginComponent extends Component {
                     User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
                     Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
                     <button onClick={this.logInClicked}>Login</button>
-                </>
+                
                 <>
                     <button onClick={this.executeHelloWorldService}>Service</button>
                     <>
