@@ -17,12 +17,13 @@ export default class ToDoApp extends Component {
 
                 <Router>
                     <Routes>
-                   
+
 
                         <Route path="/" element={<LoginComponentWithNavigation />} />
                         <Route path="/login" element={<LoginComponentWithNavigation />} />
                         <Route path="/welcome/:name" element={<WelcomeComponentWithParams />} />
-                        <Route path="*" element={<ErrorComponent/>}/>
+                        <Route path="/todos" element={<ListTodosComponent />} />
+                        <Route path="*" element={<ErrorComponent />} />
                     </Routes>
                 </Router>
                 {/* <LoginComponent/> */}
@@ -32,9 +33,47 @@ export default class ToDoApp extends Component {
     }
 }
 
-class ErrorComponent extends Component{
-    render(){
-        return(
+class ListTodosComponent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            todos: [{ id: 1, desc: "Learn React" }, { id: 2, desc: "Learn Guitar" }]
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>Todo List</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+
+                    <body>
+                        {
+                            this.state.todos.map(
+                                todo =>
+                                    <tr>
+                                        <td>{todo.id}</td>
+                                        <td>{todo.desc}</td>
+                                    </tr>
+                            )
+                        }
+
+                    </body>
+                </table>
+            </div>
+        )
+    }
+}
+
+class ErrorComponent extends Component {
+    render() {
+        return (
             <div>
                 Oops! An error occured.
             </div>
@@ -132,15 +171,15 @@ class LoginComponent extends Component {
     render() {
         return (
             <div>
-                
-                    {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
-                    {this.state.showSuccessMsg && <div>Login Successful</div>}
-                    {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>
+
+                {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
+                {this.state.showSuccessMsg && <div>Login Successful</div>}
+                {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>
                 <ShowSuccessMsg showSuccessMsg={this.state.showSuccessMsg}/> */}
-                    User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
-                    Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
-                    <button onClick={this.logInClicked}>Login</button>
-                
+                User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                <button onClick={this.logInClicked}>Login</button>
+
                 <>
                     <button onClick={this.executeHelloWorldService}>Service</button>
                     <>
