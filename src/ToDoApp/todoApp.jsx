@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import HelloWorldService from '../api/todo/HelloWorldService.js'
 import withNavigation from './withNavigation.jsx';
 import withParams from './withParams.jsx';
@@ -37,7 +37,11 @@ class ListTodosComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            todos: [{ id: 1, desc: "Learn React" }, { id: 2, desc: "Learn Guitar" }]
+            todos:
+                [
+                    { id: 1, desc: "Learn React", done: false, ETA: new Date() },
+                    { id: 2, desc: "Learn Guitar", done: false, ETA: new Date() }
+                ]
         }
     }
 
@@ -50,6 +54,8 @@ class ListTodosComponent extends Component {
                         <tr>
                             <th>ID</th>
                             <th>Description</th>
+                            <th>Done</th>
+                            <th>ETA</th>
                         </tr>
                     </thead>
 
@@ -60,6 +66,8 @@ class ListTodosComponent extends Component {
                                     <tr>
                                         <td>{todo.id}</td>
                                         <td>{todo.desc}</td>
+                                        <td>{todo.done.toString()}</td>
+                                        <td>{todo.ETA.toString()}</td>
                                     </tr>
                             )
                         }
@@ -85,7 +93,7 @@ class WelcomeComponent extends Component {
     render() {
         return (
             <div>
-                Welcome to home page Mr. {this.props.params.name}!
+                Welcome to home page Mr. {this.props.params.name}! Manage your todos <Link to="/todos">here</Link>.
             </div>
         )
     }
