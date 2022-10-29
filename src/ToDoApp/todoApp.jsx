@@ -1,21 +1,41 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HelloWorldService from '../api/todo/HelloWorldService.js'
 
-export default class ToDoApp extends Component{
-    
+export default class ToDoApp extends Component {
 
-    render(){
-        return(
+
+    render() {
+        return (
             <div>
-                <LoginComponent/>
+
+                <Router>
+                    <Routes>
+                        <Route path="/" exact element={<LoginComponent />} />
+                        <Route path="/login" element={<LoginComponent />} />
+                        <Route path="/welcome" element={<WelcomeComponent />} />
+                    </Routes>
+                </Router>
+                {/* <LoginComponent/> */}
+                {/* <WelcomeComponent/> */}
             </div>
         )
     }
 }
 
-class LoginComponent extends Component{
+class WelcomeComponent extends Component {
+    render() {
+        return (
+            <div>
+                Welcome to home page!
+            </div>
+        )
+    }
+}
 
-    constructor(props){
+class LoginComponent extends Component {
+
+    constructor(props) {
         super(props)
         this.state = {
             username: "username",
@@ -34,7 +54,7 @@ class LoginComponent extends Component{
         this.handleError = this.handleError.bind(this)
     }
 
-    handleChange(event){
+    handleChange(event) {
         console.log(event.target.value)
         this.setState({
             [event.target.name]: event.target.value
@@ -55,61 +75,61 @@ class LoginComponent extends Component{
     //     })
     // }
 
-    logInClicked(event){
-        if(this.state.username==="dp1506" && this.state.password==="Pass1"){
+    logInClicked(event) {
+        if (this.state.username === "dp1506" && this.state.password === "Pass1") {
             this.setState({
-                showSuccessMsg:true
+                showSuccessMsg: true
             })
             this.setState({
-               hasLoginFailed:false
+                hasLoginFailed: false
             })
-        }else{
+        } else {
             this.setState({
-                showSuccessMsg:false
+                showSuccessMsg: false
             })
             this.setState({
-                hasLoginFailed:true
+                hasLoginFailed: true
             })
         }
     }
 
-    executeHelloWorldService(){
+    executeHelloWorldService() {
         HelloWorldService.executor()
-        .then(response => this.handleSuccessMsg(response))  
-        .catch(error => this.handleError(error))
+            .then(response => this.handleSuccessMsg(response))
+            .catch(error => this.handleError(error))
     }
 
-    handleSuccessMsg(response){
-        this.setState({serviceMessage: response.data})
+    handleSuccessMsg(response) {
+        this.setState({ serviceMessage: response.data })
     }
 
-    handleError(error){
-        this.setState({serviceMessage: error.response.data.message})
+    handleError(error) {
+        this.setState({ serviceMessage: error.response.data.message })
         // console.log(error.response.data.message)
     }
 
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <>
-                {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
-                {this.state.showSuccessMsg && <div>Login Successful</div>}
-                {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>
+                    {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
+                    {this.state.showSuccessMsg && <div>Login Successful</div>}
+                    {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>
                 <ShowSuccessMsg showSuccessMsg={this.state.showSuccessMsg}/> */}
-                User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
-                Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
-                <button onClick={this.logInClicked}>Login</button>
+                    User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                    Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                    <button onClick={this.logInClicked}>Login</button>
                 </>
                 <>
-                <button onClick={this.executeHelloWorldService}>Service</button>
-                <>
-                {this.state.serviceMessage}
+                    <button onClick={this.executeHelloWorldService}>Service</button>
+                    <>
+                        {this.state.serviceMessage}
+                    </>
                 </>
-                </>
-                
+
             </div>
-            
+
         )
     }
 }
