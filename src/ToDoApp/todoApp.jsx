@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import HelloWorldService from '../api/todo/HelloWorldService.js'
+// import HelloWorldService from '../api/todo/HelloWorldService.js'
 import withNavigation from './withNavigation.jsx';
 import withParams from './withParams.jsx';
+import AuthenticationService from './AuthenticationService.js';
+import AuthenticatedRoute from './AuthenticatedRoute.jsx';
 
 
 export default class ToDoApp extends Component {
@@ -11,17 +13,20 @@ export default class ToDoApp extends Component {
     render() {
         const LoginComponentWithNavigation = withNavigation(LoginComponent);
         const WelcomeComponentWithParams = withParams(WelcomeComponent);
+        const HeaderComponentWithNavigation = withNavigation(HeaderComponent);
+        // const Au
         return (
-            <div>
+            <div className='container'>
 
                 <Router>
-                    <HeaderComponent />
+                    <HeaderComponentWithNavigation />
                     <Routes>
 
                         <Route path="/" element={<LoginComponentWithNavigation />} />
                         <Route path="/login" element={<LoginComponentWithNavigation />} />
-                        <Route path="/welcome/:name" element={<WelcomeComponentWithParams />} />
-                        <Route path="/todos" element={<ListTodosComponent />} />
+
+                        <Route path="/welcome/:name" element={<AuthenticatedRoute><WelcomeComponentWithParams /></AuthenticatedRoute>} />
+                        <Route path="/todos" element={<AuthenticatedRoute><ListTodosComponent /></AuthenticatedRoute>} />
                         <Route path="/logout" element={<LogoutComponent />} />
                         <Route path="*" element={<ErrorComponent />} />
 
@@ -44,30 +49,35 @@ class LogoutComponent extends Component {
             </>
         )
     }
+
+    logoutClicked(){
+
+    }
 }
 
 class HeaderComponent extends Component {
     render() {
+        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         return (
-            <header>
-                <nav className='navbar navbar-expand-md navbar-dark bg-dark p-2 m-2 w-100  bg-info text-white shadow rounded-2'>
+            <header className='container'>
+                <nav className='navbar navbar-expand-md navbar-dark bg-dark p-2 m-2  bg-info text-white shadow rounded-4'>
                     <div><a className='navbar-brand' href="https://www.linkedin.com/in/divyaprakashdp/" target="_blank">dp</a></div>
                     <ul className='navbar-nav'>
-                        <li className='nav-link'>
-                            <Link to="/welcome/dp"> Home</Link>
-                        </li>
-                        <li className='nav-link'>
-                            <Link to="/todos">Todos</Link>
-                        </li>
+                        {isUserLoggedIn && <li>
+                            <Link to="/welcome/dp" className='nav-link'> Home</Link>
+                        </li>}
+                        {isUserLoggedIn && <li>
+                            <Link to="/todos" className='nav-link'>Todos</Link>
+                        </li>}
                     </ul>
 
                     <ul className='navbar-nav navbar-collapse justify-content-end'>
-                        <li className='nav-link'>
-                            <Link to="/login">Login</Link>
-                        </li>
-                        <li className='nav-link'>
-                            <Link to="/logout">Logout</Link>
-                        </li>
+                        {!isUserLoggedIn && <li>
+                            <Link to="/login" className='nav-link'>Login</Link>
+                        </li>}
+                        {isUserLoggedIn && <li>
+                            <Link to="/logout" onClick={AuthenticationService.logout} className='nav-link'>Logout</Link>
+                        </li>}
                     </ul>
                 </nav>
             </header>
@@ -136,7 +146,7 @@ class ListTodosComponent extends Component {
 class ErrorComponent extends Component {
     render() {
         return (
-            <div>
+            <div className='container alert alert-danger'>
                 Oops! An error occured.
             </div>
         )
@@ -197,7 +207,8 @@ class LoginComponent extends Component {
 
     logInClicked(event) {
         if (this.state.username === "dp" && this.state.password === "1234") {
-            this.props.navigate(`/welcome/${this.state.username}`)
+            AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+            this.props.navigate(`/welcome/${this.state.username}`);
             // this.setState({
             //     showSuccessMsg: true
             // })
@@ -232,9 +243,9 @@ class LoginComponent extends Component {
 
     render() {
         return (
-            <div>
+            <div className='container'>
 
-                {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
+                {this.state.hasLoginFailed && <div className='alert alert-warning'>Invalid Credentials</div>}
                 {this.state.showSuccessMsg && <div>Login Successful</div>}
                 {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>
                 <ShowSuccessMsg showSuccessMsg={this.state.showSuccessMsg}/> */}
