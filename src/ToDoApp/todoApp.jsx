@@ -15,17 +15,18 @@ export default class ToDoApp extends Component {
             <div>
 
                 <Router>
-                <HeaderComponent/>
+                    <HeaderComponent />
                     <Routes>
-                        
+
                         <Route path="/" element={<LoginComponentWithNavigation />} />
                         <Route path="/login" element={<LoginComponentWithNavigation />} />
                         <Route path="/welcome/:name" element={<WelcomeComponentWithParams />} />
                         <Route path="/todos" element={<ListTodosComponent />} />
+                        <Route path="/logout" element={<LogoutComponent />} />
                         <Route path="*" element={<ErrorComponent />} />
-                        
+
                     </Routes>
-                    <FooterComponent/>
+                    <FooterComponent />
                 </Router>
                 {/* <LoginComponent/> */}
                 {/* <WelcomeComponent/> */}
@@ -34,11 +35,22 @@ export default class ToDoApp extends Component {
     }
 }
 
-class HeaderComponent extends Component{
-    render(){
-        return(
+class LogoutComponent extends Component {
+    render() {
+        return (
+            <>
+                <h1>You are logged out</h1>
+                <div className='container'>Thank you for using the application.</div>
+            </>
+        )
+    }
+}
+
+class HeaderComponent extends Component {
+    render() {
+        return (
             <header>
-                <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
+                <nav className='navbar navbar-expand-md navbar-dark bg-dark p-2 m-2 w-100  bg-info text-white shadow rounded-2'>
                     <div><a className='navbar-brand' href="https://www.linkedin.com/in/divyaprakashdp/" target="_blank">dp</a></div>
                     <ul className='navbar-nav'>
                         <li className='nav-link'>
@@ -51,8 +63,11 @@ class HeaderComponent extends Component{
 
                     <ul className='navbar-nav navbar-collapse justify-content-end'>
                         <li className='nav-link'>
-                            <Link to="/login">Login</Link></li>
-                        <li className='nav-link'>Logout</li>
+                            <Link to="/login">Login</Link>
+                        </li>
+                        <li className='nav-link'>
+                            <Link to="/logout">Logout</Link>
+                        </li>
                     </ul>
                 </nav>
             </header>
@@ -60,12 +75,14 @@ class HeaderComponent extends Component{
     }
 }
 
-class FooterComponent extends Component{
-    render(){
-        return(
-            <div>
-                <hr/>Footer
-            </div>
+class FooterComponent extends Component {
+    render() {
+        return (
+            <>
+            <footer className='footer'>
+                <span className='text-muted'>All rights reserved. @dp</span> 
+            </footer>
+            </>
         )
     }
 }
@@ -84,9 +101,9 @@ class ListTodosComponent extends Component {
 
     render() {
         return (
-            <div>
+            <div className='container'>
                 <h1>Todo List</h1>
-                
+
                 <table className="table table-bordered">
                     <thead>
                         <tr>
@@ -152,7 +169,7 @@ class LoginComponent extends Component {
         // this.handlePasswordChange = this.handlePasswordChange.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.logInClicked = this.logInClicked.bind(this)
-        this.executeHelloWorldService = this.executeHelloWorldService.bind(this)
+        // this.executeHelloWorldService = this.executeHelloWorldService.bind(this)
         this.handleSuccessMsg = this.handleSuccessMsg.bind(this)
         this.handleError = this.handleError.bind(this)
     }
@@ -197,11 +214,11 @@ class LoginComponent extends Component {
         }
     }
 
-    executeHelloWorldService() {
-        HelloWorldService.executor()
-            .then(response => this.handleSuccessMsg(response))
-            .catch(error => this.handleError(error))
-    }
+    // executeHelloWorldService() {
+    //     HelloWorldService.executor()
+    //         .then(response => this.handleSuccessMsg(response))
+    //         .catch(error => this.handleError(error))
+    // }
 
     handleSuccessMsg(response) {
         this.setState({ serviceMessage: response.data })
@@ -225,12 +242,12 @@ class LoginComponent extends Component {
                 Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
                 <button onClick={this.logInClicked}>Login</button>
 
-                <>
+                {/* <>
                     <button onClick={this.executeHelloWorldService}>Service</button>
                     <>
                         {this.state.serviceMessage}
                     </>
-                </>
+                </> */}
 
             </div>
 
