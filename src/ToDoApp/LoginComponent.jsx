@@ -89,15 +89,7 @@ class LoginComponent extends Component {
                 <ShowSuccessMsg showSuccessMsg={this.state.showSuccessMsg}/> */}
                 User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
                 Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
-                <button onClick={this.logInClicked}>Login</button>
-
-                {/* <>
-                    <button onClick={this.executeHelloWorldService}>Service</button>
-                    <>
-                        {this.state.serviceMessage}
-                    </>
-                </> */}
-
+                <button onClick={this.logInClicked} className='btn btn-success'>Login</button>
             </div>
 
         )

@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  
 }
 
 .App-logo {
@@ -51,14 +50,7 @@ input[type=text], input[type=password] {
 
 /* Style the submit button */
 button {
-  width: 50%;
-  background-color: #04AA6D;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px auto;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  width: 40%;
 }
 
 /* Add a background color to the submit button on mouse-over */

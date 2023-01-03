@@ -20,4 +20,4 @@ class AuthenticationService {
     }
 }
 
-export default new AuthenticationService;
+export default new AuthenticationService();
